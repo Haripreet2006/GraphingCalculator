@@ -17,13 +17,13 @@ public class graphpanel extends JPanel {
         double compute(int x);
     }
         // Method to draw one-branched conics like parabolas (y = f(x))
-    private void drawConic(Graphics2D g2, int originX, int originY, int xStart, int xEnd, Function f) {
+    private void drawConic(Graphics2D g2, int originX, int originY, int xStart, int xEnd, Function f, float cLe) {
         int prevX = 0, prevY = 0;
         boolean first = true;
         for (int x = xStart; x <= xEnd; x++) {
-            double y = f.compute(x);
+            double y = f.compute(x) + cLe*24;
             int drawX = originX + x;
-            int drawY = originY - (int) y;
+            int drawY = originY - (int) y ;
             g2.fillOval(drawX - 2, drawY - 2, 4, 4);
             if (!first) {
                 g2.drawLine(prevX, prevY, drawX, drawY);
@@ -104,8 +104,7 @@ public class graphpanel extends JPanel {
 
         //line graph
         g1.setColor(Color.RED);
-        int offset = originX+Math.round(cL*24);
-        drawConic(g2, offset, originY, -360, 360, x -> (mL*x));
+        drawConic(g2, originX, originY, -360, 360, x -> (mL*x), cL);
 
         g2.setColor(Color.BLUE);
         g3.setColor(Color.ORANGE);
